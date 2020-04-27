@@ -16,4 +16,4 @@ RUN pip install -r requirements.txt
 
 
 # start the uWSGI
-CMD ["python", "monitor_service.py"]
+CMD ["python", "MonitorService.py"]

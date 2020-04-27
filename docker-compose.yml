@@ -1,9 +1,50 @@
 version: "3.7"
 
 services:
+
+    mongodb:
+        image: mongo:4.2.5-bionic
+        container_name:  mongodb
+        restart: always
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
+            - MONGO_INITDB_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
+        volumes:
+            - './database:/data/db'
+        ports:
+            - "27017:27017"
+            - "27018:27018"
+            - "27019:27019"
+        expose:
+            - 27017
+            - 27018
+            - 27019
+        logging:
+            driver: "none"
+
+    mongo-express:
+        image: mongo-express
+        restart: always
+        environment:
+            # mongodb authentication
+            - ME_CONFIG_MONGODB_ADMINUSERNAME=${MONGO_ROOT_USERNAME}
+            - ME_CONFIG_MONGODB_ADMINPASSWORD=${MONGO_ROOT_PASSWORD}
+            # mongodb URI
+            - ME_CONFIG_MONGODB_SERVER=mongodb
+            - ME_CONFIG_MONGODB_PORT=27017
+            # web login username and password
+            - ME_CONFIG_BASICAUTH_USERNAME=${MONGOEXPRESS_USERNAME}
+            - ME_CONFIG_BASICAUTH_PASSWORD=${MONGOEXPRESS_PASSWORD}
+        ports:
+            - 8081:8081
+        logging:
+            driver: "none"
+
     backend:
         # look for dockerfile and build the container
-        build: ./backend
+        build: 
+            context: ./backend
+            dockerfile: Dockerfile
         container_name:  backend
         restart: always
         # set enviornemt variables
@@ -13,4 +54,6 @@ services:
             - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
         #  expose port on the container, only to other containers
         expose:
-            - 8080
+            - 5000
+        ports:
+            - 5000:5000
