@@ -1,0 +1,16 @@
+version: "3.7"
+
+services:
+    backend:
+        # look for dockerfile and build the container
+        build: ./backend
+        container_name:  backend
+        restart: always
+        # set enviornemt variables
+        environment:
+            - ADMIN_PHONE_NUMBER=${ADMIN_PHONE_NUMBER}
+            - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+            - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+        #  expose port on the container, only to other containers
+        expose:
+            - 8080

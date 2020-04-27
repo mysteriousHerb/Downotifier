@@ -1,0 +1,5 @@
+.env
+Downotifier.pem
+.vscode
+__pycache__
+backend/site_to_monitor.json
