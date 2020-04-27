@@ -11,6 +11,7 @@ beautifulsoup4 = "*"
 lxml = "*"
 fastapi = "*"
 uvicorn = "*"
+pydantic = "*"
 
 [requires]
 python_version = "3.6"

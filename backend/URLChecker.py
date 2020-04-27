@@ -6,7 +6,6 @@ chrome_headers = {'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) Apple
 def find_text_from_URL(URL, text_to_find):
     response = requests.get(URL, headers=chrome_headers)
     soup = BeautifulSoup(response.content, "lxml")
-
     if text_to_find in soup.text:
         return True
     else:
@@ -22,4 +21,4 @@ def extract_text_from_URL(URL):
 
 if __name__ == '__main__':
     print(extract_text_from_URL("https://google.com/"))
-    print(find_text_from_URL("https://google.com/", 'Google'))
+    print(find_text_from_URL("https://google.com/", '404'))
